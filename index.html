@@ -20,21 +20,23 @@
     <div id="simtitle">Diesel Cycle</div>
     <!-- Region for simulation display -->
     <!--    <div id="div">-->
-    <div id="simscreen1" style="position: absolute; top: 100px; left: 37px;width:550px;height:400px"></div>
+    <div id="simscreen1" style="position: absolute; top: 100px; left: 37px;width:550px;height:350px"></div>
     <canvas id="simscreen"  height="380" width="380"  ></canvas>
 
     <div id="titleincanvas"></div>
     <!-- Region for comment / question prompts -->
     <div id="commentboxleft">
-        <p id="p1" style="line-height:0"></p>
-        <p id="p2" style="line-height:0"></p>
-        <p id="p3" style="line-height:0"></p>
+        <p id="p1" style="line-height:0.7"></p>
+        <p id="p2" style="line-height:0.7"></p>
+        <p id="p3" style="line-height:0.7"></p>
+        <p id="p4" style="line-height:0.7"></p>
     </div>
 
     <div id="commentboxright">
-        <p id="p4" style="line-height:0.2"></p>
         <p id="p5" style="line-height:0.2"></p>
-        <p id="p6" style="line-height:0.4"></p>
+        <p id="p6" style="line-height:0.2"></p>
+        <p id="p7" style="line-height:0.4"></p>
+        <p id="p8" style="line-height:0.4"></p>
     </div>
 
     <!-- DND-Title of region for variables display -->
@@ -44,25 +46,25 @@
     <div id="variables">
         <div class="variable">
             <br>
-            <div class="varname"><p title="Link Length" style="font-size:95%;">P<sub>1</sub>(kPa)</p>
+            <div class="varname"><p title="Link Length" style="font-size:95%;">P<sub>1</sub> (kPa)</p>
                 <input id="l1spinner"/></div>
             <div id="l1slider"></div>
         </div>
 
         <div class="variable">
-            <div class="varname"><p title="Link Length" style="font-size:95%;">P<sub>3</sub>(K)</p>
+            <div class="varname"><p title="Link Length" style="font-size:95%;">P<sub>3</sub> (kPa)</p>
                 <input id="l2spinner"/></div>
             <div id="l2slider"></div>
         </div>
 
         <div class="variable">
-            <div class="varname"><p title="Link Length" style="font-size:95%;">v<sub>1</sub>(m<sup>3</sup>/mol)</p>
+            <div class="varname"><p title="Link Length" style="font-size:95%;">v<sub>1</sub> (m<sup>3</sup>)</p>
                 <input id="l3spinner"/></div>
             <div id="l3slider"></div>
         </div>
 
         <div class="variable">
-            <div class="varname"><p title="Link Length" style="font-size:95%;">v<sub>3</sub>(m<sup>3</sup>/mol)</p>
+            <div class="varname"><p title="Link Length" style="font-size:95%;">v<sub>3</sub> (m<sup>3</sup>)</p>
                 <input id="l4spinner"/></div>
             <div id="l4slider"></div>
         </div>
@@ -80,6 +82,29 @@
 <!-- Region for User controls of simulation -->
 <div id="controls">
     <img id="rotationbutton" onclick="location.reload();" src="sins/bluecwdull.png" />
+    <div style="position:relative; left: 15px;top:-60px;">
+
+        <span class="tooltip" style="border-bottom:0px dotted ; color:black;top: 5px; text-align:justify;left: 10px">Symbols
+			<span class="tooltiptext" style="left: 0px;width: 480px">
+			Process 1-2 = Isentropic Compression<br>
+            Process 2-3 = Constant Pressure Heat Addition (or Constant Pressure Combustion)<br>
+            Process 3-4 = Isentropic Expansion<br>
+            Process 4-1 = Constant Volume Heat Rejection<br>
+                P = Pressure<br>
+                v = Volume<br>
+                γ = Heat Capacity Ratio (or Adiabatic Index)
+			</span>
+			</span>
+
+        <span class="tooltip" style="border-bottom:0px dotted ; color:black;top: 5px; text-align:justify;left: 90px">Formulae
+			<span class="tooltiptext" style="left: -60px; width: 400px">
+            Process 1-2 -> Pv<sup>γ</sup> = constant<br>
+            Process 2-3 -> P = constant<br>
+            Process 3-4 -> Pv<sup>γ</sup> = constant<br>
+            Process 4-1 -> v = constant<br>
+			</span>
+			</span>
+    </div>
 </div>
 <!-- DND-Copyright display-->
 <div id="copyright" title="Developer : SOLVEr"> Copyright &copy; SOLVE The Virtual Lab @ NITK Surathkal </div>
@@ -91,7 +116,7 @@
 
     let v1 = 15;
     let v3 = 11;
-    let R = 8.314;
+    //let R = 8.314;
     let P1 = 6;
     let P3 = 50;
     let gamma = 1.7;
@@ -102,10 +127,10 @@
         var datapoints2 = [];
         var datapoints3 = [];
         var datapoints4 = [];
-        // P2 = P3;
-        // v4 = v1;
-        // v2 = v1*Math.pow(P1/P2, 1/gamma);
-        // P4 = P3*Math.pow(v3/v1, gamma);
+        P2 = P3;
+        v4 = v1;
+        v2 = v1*Math.pow(P1/P2, 1/gamma);
+        P4 = P3*Math.pow(v3/v1, gamma);
 
         //ab 1st
         for(i=v3;i<=v1;i=i+0.01) {
@@ -165,7 +190,7 @@
         })
 
 
-        graphline("simscreen1", data, "Volume(m³/mol)", "Pressure(kPa)");
+        graphline("simscreen1", data, "Volume(m³)", "Pressure(kPa)");
 
     }
 
@@ -175,10 +200,14 @@
         ctx.clearRect(0, 0, 800, 500);
 
         document.getElementById("p1").innerHTML = "P<sub>1</sub> = " + $('#l1spinner').spinner("value") + " kPa";
-        document.getElementById("p2").innerHTML = "P<sub>3</sub> = " + $('#l2spinner').spinner("value") + " kPa";
-        document.getElementById("p3").innerHTML = "v<sub>1</sub> = " + $('#l3spinner').spinner("value") + " m<sup>3</sup>/mol";
-        document.getElementById("p4").innerHTML = "v<sub>3</sub> = " + $('#l4spinner').spinner("value") + " m<sup>3</sup>/mol";
-        document.getElementById("p5").innerHTML = "Heat capacity Ratio (γ) = " + $('#l5spinner').spinner("value") + "";
+        document.getElementById("p2").innerHTML = "P<sub>2</sub> = " + P2 + " kPa";
+        document.getElementById("p3").innerHTML = "P<sub>3</sub> = " + $('#l2spinner').spinner("value") + " kPa";
+        document.getElementById("p4").innerHTML = "P<sub>4</sub> = " + P4.toFixed(2) + " kPa";
+        document.getElementById("p5").innerHTML = "v<sub>1</sub> = " + $('#l3spinner').spinner("value") + " m<sup>3</sup>";
+        document.getElementById("p6").innerHTML = "v<sub>2</sub> = " + v2.toFixed(2) + " m<sup>3</sup>";
+        document.getElementById("p7").innerHTML = "v<sub>3</sub> = " + $('#l4spinner').spinner("value") + " m<sup>3</sup>";
+        document.getElementById("p8").innerHTML = "v<sub>4</sub> = " + v4 + " m<sup>3</sup>";
+        //document.getElementById("p9").innerHTML = "v<sub>3</sub> = " + $('#l4spinner').spinner("value") + " m<sup>3</sup>/mol";
     }
     function varinit()
     {
