@@ -103,30 +103,30 @@
         var datapoints2 = [];
         var datapoints3 = [];
         var datapoints4 = [];
-        P2 = P3;
-        v4 = v1;
-        v2 = v1*Math.pow(P1/P2, 1/gamma);
-        P4 = P3*Math.pow(v3/v1, gamma);
+        // P2 = P3;
+        // v4 = v1;
+        // v2 = v1*Math.pow(P1/P2, 1/gamma);
+        // P4 = P3*Math.pow(v3/v1, gamma);
 
         //ab 1st
-        for(i=v3;i<=v4;i=i+0.0001) {
+        for(i=v3;i<=v1;i=i+0.01) {
             datapoints1.push({x: i, y: P3*Math.pow(v3, gamma)/Math.pow(i,gamma)});
         }
 
         //bc 2nd
         //for(j = Math.pow(T2/T1, 1/(gamma-1))*v2; j<=v2; j++) {
-        for(j=v2; j<=v3; j=j+0.0001){
+        for(j=v1*Math.pow(P1/P3, 1/gamma); j<=v3; j=j+0.01){
             datapoints2.push({x: j, y: P3});
         }
 
         //cd 3rd
-        for(k=v2; k<=v1; k=k+0.0001){
+        for(k=v1*Math.pow(P1/P3, 1/gamma); k<=v1; k=k+0.01){
             datapoints3.push({ x: k, y: P1*Math.pow(v1, gamma)/Math.pow(k,gamma)});
         }
 
         //da 4th
         //for(m=2; m<=Math.pow(T1/T2, 1/(gamma-1))*v1; m++){
-        for(m=P1; m<=P4; m=m+0.0001){
+        for(m=P1; m<=P3*Math.pow(v3/v1, gamma); m=m+0.01){
             datapoints4.push({ x: v1 , y: m });
         }
 
@@ -170,17 +170,17 @@
 
     }
 
-    function draw0() {
-        var canvas = document.getElementById('simscreen');
-        ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, 800, 500);
-
-        document.getElementById("p1").innerHTML = "Hot reservoir T<sub>1</sub>(K)=  " + $('#l1spinner').spinner("value") + "";
-        document.getElementById("p2").innerHTML = "Cold reservoir T<sub>2</sub>(K) = " + $('#l2spinner').spinner("value") + "";
-        document.getElementById("p3").innerHTML = "Volume V<sub>1</sub>(m<sup>3</sup>/mol)=  " + $('#l3spinner').spinner("value") + "";
-        document.getElementById("p4").innerHTML = "Volume V<sub>2</sub>(m<sup>3</sup>/mol)= " + $('#l4spinner').spinner("value") + "";
-        document.getElementById("p5").innerHTML = "Heat capacity Ratio <sub>γ</sub>= " + $('#l5spinner').spinner("value") + "";
-    }
+    // function draw0() {
+    //     var canvas = document.getElementById('simscreen');
+    //     ctx = canvas.getContext('2d');
+    //     ctx.clearRect(0, 0, 800, 500);
+    //
+    //     document.getElementById("p1").innerHTML = "Hot reservoir T<sub>1</sub>(K)=  " + $('#l1spinner').spinner("value") + "";
+    //     document.getElementById("p2").innerHTML = "Cold reservoir T<sub>2</sub>(K) = " + $('#l2spinner').spinner("value") + "";
+    //     document.getElementById("p3").innerHTML = "Volume V<sub>1</sub>(m<sup>3</sup>/mol)=  " + $('#l3spinner').spinner("value") + "";
+    //     document.getElementById("p4").innerHTML = "Volume V<sub>2</sub>(m<sup>3</sup>/mol)= " + $('#l4spinner').spinner("value") + "";
+    //     document.getElementById("p5").innerHTML = "Heat capacity Ratio <sub>γ</sub>= " + $('#l5spinner').spinner("value") + "";
+    // }
     function varinit()
     {
         varchange();
@@ -197,39 +197,39 @@
         $('#l5spinner').spinner("value", 0);
     }
 
-    function simstate() {
-        if (flag===true){
-            document.getElementById('playpausebutton').src="sins/bluepausedull.png";
-            flag=false;
-
-            $('#l1spinner').spinner("disable");
-            $('#l2spinner').spinner("disable");
-            $('#l3spinner').spinner("disable");
-            $('#l4spinner').spinner("disable");
-            $('#l5spinner').spinner("disable");
-
-            $('#l1slider').slider("disable");
-            $('#l2slider').slider("disable");
-            $('#l3slider').slider("disable");
-            $('#l4slider').slider("disable");
-            $('#l5slider').slider("disable");
-        }
-        else {
-            document.getElementById('playpausebutton').src="sins/blueplaydull.png";
-            flag=true;
-            $('#l1spinner').spinner("enable");
-            $('#l2spinner').spinner("enable");
-            $('#l3spinner').spinner("enable");
-            $('#l4spinner').spinner("enable");
-            $('#l5spinner').spinner("enable");
-
-            $('#l1slider').slider("enable");
-            $('#l2slider').slider("enable");
-            $('#l3slider').slider("enable");
-            $('#l4slider').slider("enable");
-            $('#l5slider').slider("enable");
-        }
-    }
+    // function simstate() {
+    //     if (flag===true){
+    //         document.getElementById('playpausebutton').src="sins/bluepausedull.png";
+    //         flag=false;
+    //
+    //         $('#l1spinner').spinner("disable");
+    //         $('#l2spinner').spinner("disable");
+    //         $('#l3spinner').spinner("disable");
+    //         $('#l4spinner').spinner("disable");
+    //         $('#l5spinner').spinner("disable");
+    //
+    //         $('#l1slider').slider("disable");
+    //         $('#l2slider').slider("disable");
+    //         $('#l3slider').slider("disable");
+    //         $('#l4slider').slider("disable");
+    //         $('#l5slider').slider("disable");
+    //     }
+    //     else {
+    //         document.getElementById('playpausebutton').src="sins/blueplaydull.png";
+    //         flag=true;
+    //         $('#l1spinner').spinner("enable");
+    //         $('#l2spinner').spinner("enable");
+    //         $('#l3spinner').spinner("enable");
+    //         $('#l4spinner').spinner("enable");
+    //         $('#l5spinner').spinner("enable");
+    //
+    //         $('#l1slider').slider("enable");
+    //         $('#l2slider').slider("enable");
+    //         $('#l3slider').slider("enable");
+    //         $('#l4slider').slider("enable");
+    //         $('#l5slider').slider("enable");
+    //     }
+    // }
 
     function varchange()
     {
@@ -281,8 +281,11 @@
         $( "#l5slider" ).on(  "slide",  function( e, ui ) {$('#l5spinner').spinner("value",ui.value);varupdate();});
         $( "#l5spinner" ).on( "spin",   function( e, ui ) {$('#l5slider').slider("value",ui.value);varupdate();});
         $( "#l5spinner" ).on( "change", function() {varchange() } );
-        // travel_val($('#l1spinner').spinner("value"));
-
+        // // travel_val($('#l1spinner').spinner("value"));
+        P1 = $('#l1spinner').spinner('value');
+        P3 = $('#l2spinner').spinner('value');
+        v1 = $('#l3spinner').spinner('value');
+        v3 = $('#l4spinner').spinner('value');
         varupdate();
     }
 
@@ -309,7 +312,7 @@
         gamma = Number($('#l5spinner').spinner('value'));
         console.log(P1, P3, v1, v3)
         dummy();
-        draw0();
+        //draw0();
     }
 </script>
 </body>
