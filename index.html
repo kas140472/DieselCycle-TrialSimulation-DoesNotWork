@@ -20,7 +20,7 @@
     <div id="simtitle">Diesel Cycle</div>
     <!-- Region for simulation display -->
     <!--    <div id="div">-->
-    <div id="simscreen1" style="position: absolute; top: 100px; left: 50px;width:550px;height:400px"></div>
+    <div id="simscreen1" style="position: absolute; top: 100px; left: 37px;width:550px;height:400px"></div>
     <canvas id="simscreen"  height="380" width="380"  ></canvas>
 
     <div id="titleincanvas"></div>
@@ -43,35 +43,35 @@
     <!-- Region for Input parameters of simulation -->
     <div id="variables">
         <div class="variable">
-            <div class="varname"><p title="Link Length" style="font-size:95%;">Cold T<sub>1</sub>(K)</p>
+            <br>
+            <div class="varname"><p title="Link Length" style="font-size:95%;">P<sub>1</sub>(kPa)</p>
                 <input id="l1spinner"/></div>
             <div id="l1slider"></div>
         </div>
 
         <div class="variable">
-            <div class="varname"><p title="Link Length" style="font-size:95%;">heat T<sub>2</sub>(K)</p>
+            <div class="varname"><p title="Link Length" style="font-size:95%;">P<sub>3</sub>(K)</p>
                 <input id="l2spinner"/></div>
             <div id="l2slider"></div>
         </div>
 
         <div class="variable">
-            <div class="varname"><p title="Link Length" style="font-size:95%;"> Volume V<sub>1</sub>(m<sup>3</sup>/mol)</p>
+            <div class="varname"><p title="Link Length" style="font-size:95%;">v<sub>1</sub>(m<sup>3</sup>/mol)</p>
                 <input id="l3spinner"/></div>
             <div id="l3slider"></div>
         </div>
 
         <div class="variable">
-            <div class="varname"><p title="Link Length" style="font-size:95%;"> Volume V<sub>2</sub>(m<sup>3</sup>/mol)</p>
+            <div class="varname"><p title="Link Length" style="font-size:95%;">v<sub>3</sub>(m<sup>3</sup>/mol)</p>
                 <input id="l4spinner"/></div>
             <div id="l4slider"></div>
         </div>
 
         <div class="variable">
-            <div class="varname"><p title="Link Length" style="font-size:95%;"> Heat Capacity <sub>γ</sub></p>
+            <div class="varname"><p title="Link Length" style="font-size:95%;">γ</p>
                 <input id="l5spinner"/></div>
             <div id="l5slider"></div>
         </div>
-        <br>
     </div>
 </div>
 </div>
@@ -79,8 +79,7 @@
 <div id="ctrltitle">CONTROLS</div>
 <!-- Region for User controls of simulation -->
 <div id="controls">
-
-
+    <img id="rotationbutton" onclick="location.reload();" src="sins/bluecwdull.png" />
 </div>
 <!-- DND-Copyright display-->
 <div id="copyright" title="Developer : SOLVEr"> Copyright &copy; SOLVE The Virtual Lab @ NITK Surathkal </div>
@@ -144,7 +143,7 @@
             type: "line",
             xValueType: "Float",
             showInLegend: true,
-            name: "Constant Volume Heat Rejection",
+            name: "Constant Pressure Combustion",
             markerSize: 1,
             dataPoints: datapoints2
         })
@@ -160,7 +159,7 @@
             type: "line",
             xValueType: "Float",
             showInLegend: true,
-            name: "Constant Volume Combustion",
+            name: "Constant Volume Heat Rejection",
             markerSize: 1,
             dataPoints: datapoints4
         })
@@ -170,17 +169,17 @@
 
     }
 
-    // function draw0() {
-    //     var canvas = document.getElementById('simscreen');
-    //     ctx = canvas.getContext('2d');
-    //     ctx.clearRect(0, 0, 800, 500);
-    //
-    //     document.getElementById("p1").innerHTML = "Hot reservoir T<sub>1</sub>(K)=  " + $('#l1spinner').spinner("value") + "";
-    //     document.getElementById("p2").innerHTML = "Cold reservoir T<sub>2</sub>(K) = " + $('#l2spinner').spinner("value") + "";
-    //     document.getElementById("p3").innerHTML = "Volume V<sub>1</sub>(m<sup>3</sup>/mol)=  " + $('#l3spinner').spinner("value") + "";
-    //     document.getElementById("p4").innerHTML = "Volume V<sub>2</sub>(m<sup>3</sup>/mol)= " + $('#l4spinner').spinner("value") + "";
-    //     document.getElementById("p5").innerHTML = "Heat capacity Ratio <sub>γ</sub>= " + $('#l5spinner').spinner("value") + "";
-    // }
+    function draw0() {
+        var canvas = document.getElementById('simscreen');
+        ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, 800, 500);
+
+        document.getElementById("p1").innerHTML = "P<sub>1</sub> = " + $('#l1spinner').spinner("value") + " kPa";
+        document.getElementById("p2").innerHTML = "P<sub>3</sub> = " + $('#l2spinner').spinner("value") + " kPa";
+        document.getElementById("p3").innerHTML = "v<sub>1</sub> = " + $('#l3spinner').spinner("value") + " m<sup>3</sup>/mol";
+        document.getElementById("p4").innerHTML = "v<sub>3</sub> = " + $('#l4spinner').spinner("value") + " m<sup>3</sup>/mol";
+        document.getElementById("p5").innerHTML = "Heat capacity Ratio (γ) = " + $('#l5spinner').spinner("value") + "";
+    }
     function varinit()
     {
         varchange();
@@ -234,17 +233,17 @@
     function varchange()
     {
         // Variable r1 slider and number input types
-        $('#l1slider').slider({ max : 6.0, min : 0.25, step : 0.25});           // slider initialisation : jQuery widget
-        $('#l1spinner').spinner({ max : 6.0, min : 0.25, step : 0.25 });        // number initialisation : jQuery widget
+        $('#l1slider').slider({ max : 6.0, min : 4, step : 0.01});           // slider initialisation : jQuery widget
+        $('#l1spinner').spinner({ max : 6.0, min : 4, step : 0.01 });        // number initialisation : jQuery widget
 
-        $('#l2slider').slider({ max : 200.0, min : 50, step : 1 });        // slider initialisation : jQuery widget
-        $('#l2spinner').spinner({ max : 200.0, min : 50, step : 1 });          // number initialisation : jQuery widget
+        $('#l2slider').slider({ max : 60.0, min : 50, step : 0.01 });        // slider initialisation : jQuery widget
+        $('#l2spinner').spinner({ max : 60.0, min : 50, step : 0.01 });          // number initialisation : jQuery widget
 
-        $('#l3slider').slider({ max : 20, min : 15, step : 0.1});          // slider initialisation : jQuery widget
-        $('#l3spinner').spinner({max : 20, min : 15, step : 0.1 });        // number initialisation : jQuery widget
+        $('#l3slider').slider({ max : 20, min : 15, step : 0.01});          // slider initialisation : jQuery widget
+        $('#l3spinner').spinner({max : 20, min : 15, step : 0.01 });        // number initialisation : jQuery widget
 
-        $('#l4slider').slider({ max : 11, min : 7, step : 0.1 });          // slider initialisation : jQuery widget
-        $('#l4spinner').spinner({ max : 11, min : 7, step :0.1 });         // number initialisation : jQuery widget
+        $('#l4slider').slider({ max : 11, min : 7, step : 0.01 });          // slider initialisation : jQuery widget
+        $('#l4spinner').spinner({ max : 11, min : 7, step :0.01 });         // number initialisation : jQuery widget
 
         $('#l5slider').slider({ max : 1.7, min : 1.5, step : 0.01});          // slider initialisation : jQuery widget
         $('#l5spinner').spinner({ max : 1.7, min : 1.5, step :0.01 });           // number initialisation : jQuery widget
@@ -312,7 +311,7 @@
         gamma = Number($('#l5spinner').spinner('value'));
         console.log(P1, P3, v1, v3)
         dummy();
-        //draw0();
+        draw0();
     }
 </script>
 </body>
