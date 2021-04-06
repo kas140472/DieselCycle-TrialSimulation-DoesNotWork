@@ -128,7 +128,16 @@ canvas#simscreen1
 	fill: #1c87c9;
 	/*border: 1px solid black;*/
 }
-
+canvas#simscreen
+{
+	position:absolute;
+	left:35px;
+	top:100px;
+	height: 350px;
+	width: 260px;
+	fill: #1c87c9;
+	/*border: 2px solid black;*/
+}
 /*canvas#simscreen*/
 /*{*/
 /*	position:absolute;*/
@@ -257,16 +266,16 @@ input#l4spinner{
 #playpausebutton
 {
 	position: inherit;
-	left: 45px;
-	top: 30px;
+	left: 40px;
+	top: 60px;
 
 }
 
 #rotationbutton
 {
 	position: relative;
-	left: 80px;
-	top: 50px;
+	left: 110px;
+	top: 60px;
 
 }
 
